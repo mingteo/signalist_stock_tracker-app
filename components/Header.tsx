@@ -6,8 +6,8 @@ import UserDropdown from "./UserDropdown";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 header">
-      <div className="max-w-full lg:max-w-3/4 mx-auto header-wrapper">
+    <header className="header sticky top-0">
+      <div className="header-wrapper mx-auto max-w-full lg:w-5/6">
         <Link href="/">
           <Image
             src="/assets/icons/logo.svg"
