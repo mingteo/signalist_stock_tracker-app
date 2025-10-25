@@ -3,10 +3,14 @@
 import FieldInput from "@/components/forms/FieldInput";
 import FooterLink from "@/components/forms/FooterLink";
 import { Button } from "@/components/ui/button";
+import { signInWithEmail } from "@/lib/actions/auth.actions";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const SigInPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -21,9 +25,13 @@ const SigInPage = () => {
   });
   const onSubmit = async (data: SignInFormData) => {
     try {
-      console.log(data);
+      const result = await signInWithEmail(data);
+      if (result.success) router.push("/");
     } catch (e) {
       console.error(e);
+      toast.error("Sign in failed", {
+        description: e instanceof Error ? e.message : "Failed to sign in",
+      });
     }
   };
 
@@ -53,19 +61,19 @@ const SigInPage = () => {
           error={errors.password}
           validation={{ required: "Password is required", minLength: 8 }}
         />
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="yellow-btn mt-5 w-full"
+        >
+          {isSubmitting ? "Signing In" : "Log In"}
+        </Button>
+        <FooterLink
+          text="Do not have an account? "
+          linkText="Sign Up"
+          href="/sign-up"
+        />
       </form>
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        className="yellow-btn mt-5 w-full"
-      >
-        {isSubmitting ? "Signing In" : "Log In"}
-      </Button>
-      <FooterLink
-        text="Do not have an account? "
-        linkText="Sign Up"
-        href="/sign-up"
-      />
     </>
   );
 };
