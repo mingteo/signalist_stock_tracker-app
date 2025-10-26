@@ -1,6 +1,5 @@
 "use server";
 
-import { resolveSoa } from "dns";
 import { auth } from "../better-auth/auth";
 import { inngest } from "../inngest/client";
 import { headers } from "next/headers";
